@@ -16,16 +16,28 @@ All data transformations are performed using the R script run_analysis.R.
 
 This script will produce an average of key variables by subject and activity and output into the file averages.csv.
 
+The script has the below flow:
+
+* features are read from 'features.txt' and given R friendly names with gsub
+* test and train data are read read.table and then combined with rbind
+* columns are restricted to means and standard deviations by matching column names
+* activty labels are added by reading and merging 'activity_labels.txt'
+* ddply and colMeans are used to calculate means of features
+* averages datatable is reshaped and given proper labels using melt, merge subset operators.
+* final CSV is output as averages.csv
+
 ## Code Book
 One file, is created. Average.txt with the following columns:
 
-subject - 
-activity_label - 
-feature - feature name being averaged, see 
-","average"
+column         | meaning
+---------------|---------
+subject        | An identifier of the subject who carried out the experiment.
+activity_label | Observed activity
+feature        | feature name being averaged, see feature selection below
+average        | Averge value for that feature for the given subject / activity
 
 
-Feature Selection 
+Feature Selection [1]
 =================
 
 The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
