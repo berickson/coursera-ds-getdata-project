@@ -5,7 +5,6 @@
 features <- read.table('features.txt',row.names=1,col.names=c('number','feature'))
 
 # get rid of funny characters in feature names
-#features$name = gsub("[\\(\\)\\.\\-\\,]","",features$feature,fixed=FALSE)
 features$name = gsub("[^a-zA-Z0-9 ]","",features$feature,fixed=FALSE)
 
 X_test <- read.table('test/X_test.txt', col.names=features$name)
