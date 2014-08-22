@@ -41,3 +41,15 @@ D <- subset(D, select = -c(activity))
 # Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 library(plyr)
+averages_wide <- ddply(D,c('activity_label','subject'),function(x) colMeans(x[,subFeatures$name]))
+
+library(reshape)
+averages <- melt(averages_wide,id=c('activity_label','subject'), variable_name='name')
+averages <- rename(averages,c('value'='average'))
+averages <- merge(averages,features)
+averages <- averages[,c('subject','activity_label','feature','average')]
+# Please upload the tidy data set created in step 5 of the instructions. 
+# Please upload your data set as a txt file created with write.table() 
+# using row.name=FALSE (do not cut and paste a dataset directly into the
+# text box, as this may cause errors saving your submission).
+write.csv(averages, file='averages.txt', row.names=FALSE)
